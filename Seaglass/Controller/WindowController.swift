@@ -18,7 +18,7 @@
 
 import Cocoa
 
-class WindowController: NSWindowController, NSWindowDelegate {
+class WindowController: NSWindowController, NSWindowDelegate, NSTouchBarDelegate {
 
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -29,4 +29,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
         return false
     }
     
+    @available(OSX 10.12.2, *)
+    override func makeTouchBar() -> NSTouchBar? {
+        guard let viewController = contentViewController else {
+            return nil
+        }
+        return viewController.makeTouchBar()
+    }
+
 }

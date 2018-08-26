@@ -109,5 +109,15 @@ class MainViewController: NSSplitViewController, MatrixServicesDelegate, ViewCon
             NSApplication.shared.terminate(self)
         })
     }
+    
+}
 
+@available(OSX 10.12.2, *)
+extension MainViewController: NSTouchBarDelegate {
+    override func makeTouchBar() -> NSTouchBar? {
+        let touchBar = NSTouchBar()
+        touchBar.delegate = self
+        touchBar.defaultItemIdentifiers = [.characterPicker, .candidateList]
+        return touchBar
+    }
 }
