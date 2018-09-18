@@ -42,7 +42,7 @@ class RoomAliasesController: NSViewController, NSTableViewDelegate, NSTableViewD
                 alert.alertStyle = .warning
                 alert.addButton(withTitle: "OK")
                 alert.runModal()
-                self.dismissViewController(self)
+                self.dismiss(self)
                 return
             }
             
@@ -72,7 +72,7 @@ class RoomAliasesController: NSViewController, NSTableViewDelegate, NSTableViewD
             alert.alertStyle = .warning
             alert.addButton(withTitle: "OK")
             alert.runModal()
-            self.dismissViewController(self)
+            self.dismiss(self)
             return
         }
     }

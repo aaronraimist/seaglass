@@ -28,7 +28,7 @@ import Cocoa
         super.init(coder: coder)
         
         var topLevelObjects : NSArray?
-        if Bundle.main.loadNibNamed(NSNib.Name("MessageInputField"), owner: self, topLevelObjects: &topLevelObjects) {
+        if Bundle.main.loadNibNamed("MessageInputField", owner: self, topLevelObjects: &topLevelObjects) {
             contentView = topLevelObjects!.first(where: { $0 is NSView }) as? NSView
             self.addSubview(contentView!)
             contentView?.frame = self.bounds
@@ -52,7 +52,7 @@ import Cocoa
         NSApplication.shared.orderFrontCharacterPalette(nil)
     }
     
-    public override func controlTextDidChange(_ obj: Notification) {
+    public func controlTextDidChange(_ obj: Notification) {
         if obj.object as? NSTextField == textField {
             textField.invalidateIntrinsicContentSize()
             self.invalidateIntrinsicContentSize()
@@ -63,7 +63,7 @@ import Cocoa
         }
     }
     
-    public override func controlTextDidEndEditing(_ obj: Notification) {
+    public func controlTextDidEndEditing(_ obj: Notification) {
         self.controlTextDidChange(obj)
     }
 }
