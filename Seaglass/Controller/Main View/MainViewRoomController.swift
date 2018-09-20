@@ -45,7 +45,8 @@ class MainViewRoomController: NSViewController, MatrixRoomDelegate, NSTableViewD
     var roomIsTyping: Bool = false
     var roomIsPaginating: Bool = false
     var roomIsOverscrolling: Bool = false
-    var roomTyping: Bool {
+
+    /*var roomTyping: Bool {
         set {
             if (newValue && !roomIsTyping) || (!newValue && roomIsTyping) {
                 roomIsTyping = newValue
@@ -63,7 +64,7 @@ class MainViewRoomController: NSViewController, MatrixRoomDelegate, NSTableViewD
         get {
             return roomIsTyping
         }
-    }
+    }*/
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -135,7 +136,7 @@ class MainViewRoomController: NSViewController, MatrixRoomDelegate, NSTableViewD
             formattedText = unformattedText
         }
         
-        roomTyping = false
+        //roomTyping = false
         
         var returnedEvent: MXEvent?
         if sender.stringValue.starts(with: "/invite ") {
@@ -188,10 +189,16 @@ class MainViewRoomController: NSViewController, MatrixRoomDelegate, NSTableViewD
         sender.isEnabled = true
         sender.becomeFirstResponder()
     }
-    
-    public override func controlTextDidChange(_ obj: Notification) {
-        if obj.object as? NSTextField == RoomMessageInput.textField {
-            roomTyping = !RoomMessageInput.textField.stringValue.isEmpty
+
+    override func controlTextDidChange(_ obj: Notification) {
+        if obj.object as? AutoGrowingTextField == RoomMessageInput.textField {
+			if let room = MatrixServices.inst.session.room(withRoomId: roomId) {
+				room.sendTypingNotification(typing: !RoomMessageInput.textField.stringValue.isEmpty, timeout: 30) { (response) in
+					if response.isFailure {
+						print("Failed to send typing notification for room \(self.roomId)")
+					}
+				}
+			}
         }
     }
     
@@ -368,7 +375,7 @@ class MainViewRoomController: NSViewController, MatrixRoomDelegate, NSTableViewD
             return
         }
     
-        roomTyping = false
+        //roomTyping = false
         roomIsPaginating = false
         roomIsOverscrolling = false
         

@@ -41,8 +41,8 @@ class AutoGrowingTextField: NSTextField {
 	}
 
 	override func textDidChange(_ notification: Notification) {
-		super.textDidChange(notification)
 		self.invalidateIntrinsicContentSize()
+		super.textDidChange(notification)
 	}
 
 	override var intrinsicContentSize: NSSize {

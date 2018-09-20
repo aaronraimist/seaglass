@@ -19,6 +19,7 @@
 import Cocoa
 
 @IBDesignable class MessageInputField: NSControl, NSTextFieldDelegate {
+
     @IBOutlet var contentView: NSView?
     @IBOutlet var textField: AutoGrowingTextField!
     @IBOutlet var delegate: NSObject?
